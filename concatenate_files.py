@@ -9,19 +9,21 @@ import os
 import glob
 
 # script pour convertir les données en netcdf 
-yi = 1983
-yf = 2020   
+yi = 2019
+yf = 2021   
 path = 'D:/Utilisateurs/guillaume/Desktop/PROJET_AFR44/ARC2/netcdf/'
 for year in range(yi,yf,1):
     for month in ['01','02','03','04','05','06','07','08','09','10','11','12']: 
-        
-        multi_files = glob.glob(path +'/ARC2_'+str(year)+month+'*.nc' )
-        
-        ds = xr.concat([xr.open_dataset(f) for f in multi_files], 'time')  
-        
-        ds.to_netcdf(path + 'ARC2_'+str(year)+month+'.nc')  
-        
-        [os.remove(f) for f in multi_files]
+        try:
+            multi_files = glob.glob(path +'/ARC2_'+str(year)+month+'*.nc' )
+            
+            ds = xr.concat([xr.open_dataset(f) for f in multi_files], 'time')  
+            
+            ds.to_netcdf(path + 'ARC2_'+str(year)+month+'.nc')  
+            
+            [os.remove(f) for f in multi_files]
+        except:
+            pass
         
     
             

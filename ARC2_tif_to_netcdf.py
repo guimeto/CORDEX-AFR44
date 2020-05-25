@@ -13,8 +13,8 @@ from calendar import monthrange
 
     
 # script pour convertir les données en netcdf 
-yi = 1983
-yf = 2020    
+yi = 2020
+yf = 2021    
 for year in range(yi,yf,1):
     for month in ['01','02','03','04','05','06','07','08','09','10','11','12']: 
         days = monthrange(year, int(month))[1]

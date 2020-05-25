@@ -6,7 +6,11 @@ Created on Fri Jan  2 02:04:45 2009
 """
 import xarray as xr
 import netCDF4 as nc
-
+import os
+def create_dir(directory):
+    if not os.path.exists(directory):
+        print('Creating Directory '+directory)
+        os.makedirs(directory)
 
 def create_file_from_source(src_file, trg_file):
     src = nc.Dataset(src_file)
@@ -44,15 +48,20 @@ lat2d=m_f.variables['lat'][:]
 lon2d=m_f.variables['lon'][:]
 
 mask = m_f['__xarray_dataarray_variable__'].values
-model = 'HIRHAM5-v1_AFR-44_NCC-NorESM1-M_historical'
+model = 'CCLM-4-8-17_AFR-44_ECMWF-ERAINT'
 variable = 'tasmin'
-year = 2005
-for year in range(1990,2020):
+path = 'D:/Utilisateurs/guillaume/Desktop/PROJET_AFR44/RCM/tasmin/ll/nc/'
+pathout =  'D:/Utilisateurs/guillaume/Desktop/PROJET_AFR44/RCM/BOX/'
+create_dir(pathout +  model + '/' + variable + '/')
+
+for year in range(1989,1990):
     for month in range(1,13):
-        infile = model + '_' + variable + '_ll_' +  str(year) + '_r.nc'
-        #infile = 'HIRHAM5-v1_AFR-44_NCC-NorESM1-M_historical_tasmin_ll_2005_r_'+str(year) +'_{:02d}'.format(int(month))+'_OUTAOUAIS_ERA5grid.nc'           
-        outfile = model + '_' + variable + '_ll_' +str(year) + '_M.nc'
+        infile = path +  str(year) + '/' + f'{month:02}/' + model + '_' + variable + '_ll_' +  str(year) + '_'+f'{month:02}.nc4'
+        outfile = pathout +  model + '/' + variable + '/' + model + '_' + variable + '_ll_' +  str(year) + '_'+f'{month:02}_M.nc4'
         
         nc_Modc=xr.open_dataset(infile)
         data  = nc_Modc[variable].where(mask == 1)
         create_file_from_source(infile, outfile)
+        
+        
+        
