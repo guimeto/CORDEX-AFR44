@@ -9,7 +9,7 @@ import os
 import glob
 
 # script pour convertir les données en netcdf 
-yi = 2019
+yi = 2000
 yf = 2021   
 path = 'D:/Utilisateurs/guillaume/Desktop/PROJET_AFR44/ARC2/netcdf/'
 for year in range(yi,yf,1):

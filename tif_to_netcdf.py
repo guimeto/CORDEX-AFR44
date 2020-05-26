@@ -11,16 +11,17 @@ import xarray as xr
 import gdal
 from calendar import monthrange
 
-yi = 1983
-yf = 2020
+yi = 2020
+yf = 2021
 
 for year in range(yi,yf,1):
     for month in ['01','02','03','04','05','06','07','08','09','10','11','12']: 
+     
         days = monthrange(year, int(month))[1]
         for day in range(1,days+1,1):
             # lecture de la serie d ERA5
             try:
-                file = './tif/africa_arc.'+str(year)+month+f'{day:02}.tif'
+                file = 'D:/Utilisateurs/guillaume/Desktop/PROJET_AFR44/ARC2/tif/africa_arc.'+str(year)+month+f'{day:02}.tif'
                 ds = gdal.Open(file)
                 a = ds.ReadAsArray()
                 nlat,nlon = np.shape(a)
@@ -38,7 +39,7 @@ for year in range(yi,yf,1):
                 
                 data_set["rainfall(mm.day-1)"] = (['lat', 'lon'],  a)
                 
-                data_set.to_netcdf( 'ARC2_'+str(year)+month+f'{day:02}.nc') 
+                data_set.to_netcdf( 'D:/Utilisateurs/guillaume/Desktop/PROJET_AFR44/ARC2/netcdf/ARC2_'+str(year)+month+f'{day:02}.nc') 
             except:
                 pass
             
